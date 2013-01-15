@@ -1,0 +1,75 @@
+<?php
+	
+	global $COURSE;
+	
+	if (!isset($this->config->numberofdonations)) {
+        $this->config->numberofdonations = $limit;
+    }
+
+	if (!isset($this->config->localcourse)) {
+        $this->config->localcourse = true;
+    }
+?>
+
+<table cellpadding="9" cellspacing="0" class="blockconfigtable">
+<tr valign="top">
+    <td align="right"><?php print_string('configtitle', 'block_donations'); ?>:</td>
+    <td><input type="text" name="title" size="30" value="<?php echo isset($this->config->title)?p($this->config->title):''; ?>" /></td>
+</tr>
+<tr valign="top">
+	<td align="right"><?php print_string('coursescope', 'block_donations'); ?>:</td>
+	<td>
+		<?php
+			$localoptions[0] = get_string('allcourses', 'block_donations');
+			$localoptions[1] = get_string('localcourse', 'block_donations');
+			choose_from_menu($localoptions, 'localcourse', $this->config->localcourse);
+		?>
+	</td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string('sortby', 'block_donations'); ?>:</td>
+    <td>
+        <?php 
+                if (isset($this->config) && isset($this->config->sortby)) {
+                        $selected = $this->config->sortby;
+                } else {
+                       $selected = 'percentage-asc';
+                }
+                $options = array ( 'percentage-asc'  => get_string('percentage-asc', 'block_donations'),
+                                   'percentage-desc' => get_string('percentage-desc', 'block_donations'),
+                                   'amountneeded-asc' => get_string('amountneeded-asc', 'block_donations'),
+                                   'amountneeded-desc' => get_string('amountneeded-desc', 'block_donations'),
+                                   'amountraised-asc' => get_string('amountraised-asc', 'block_donations'),
+                                   'amountraised-desc' => get_string('amountraised-desc', 'block_donations'),
+                                   );
+				
+                choose_from_menu ($options, 'sortby', $selected);
+        ?>    
+    </td>
+</tr>
+<tr valign="top">
+	<td align="right"><?php print_string('numberofdonations', 'block_donations'); ?>:</td>
+	<td>
+		<?php
+			$numberofdonations = array(
+				'0' => get_string('nolimit', 'block_donations'), 
+				'1' => 1,
+				'2' => 2,
+				'3' => 3,
+				'4' => 4,
+				'5' => 5,
+				'6' => 6,
+				'7' => 7,
+				'8' => 8,
+				'9' => 9,
+				'10' => 10);
+			choose_from_menu($numberofdonations, 'numberofdonations', $this->config->numberofdonations);
+		?>
+	</td>
+</tr>
+<tr>
+    <td colspan="3" align="center">
+    <input type="submit" value="<?php print_string('savechanges') ?>" /></td>
+</tr>
+</table>
+
